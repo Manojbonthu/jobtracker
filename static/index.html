@@ -35,26 +35,34 @@
   --shmd:0 8px 40px rgba(0,0,0,.15);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;}
-body{font-family:var(--body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+html{height:100%;}
+body{font-family:var(--body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;min-height:100%;overflow-x:hidden;}
 
 /* ── HEADER ── */
-header{display:flex;align-items:center;gap:18px;padding:0 32px;height:62px;background:#fff;border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-shrink:0;}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo-icon{width:36px;height:36px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 3px 10px rgba(232,84,26,.35);}
-.logo-text{font-family:var(--sans);font-size:19px;font-weight:900;color:var(--dark);letter-spacing:-.01em;}
+header{display:flex;align-items:center;gap:12px;padding:0 20px;height:58px;background:#fff;border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:300;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.logo-icon{width:34px;height:34px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 3px 10px rgba(232,84,26,.35);}
+.logo-text{font-family:var(--sans);font-size:18px;font-weight:900;color:var(--dark);letter-spacing:-.01em;}
 .logo-text span{color:var(--orange);}
 header .spacer{flex:1;}
-.header-badge{font-family:var(--sans);font-size:11px;font-weight:700;color:#fff;background:var(--orange);padding:5px 14px;border-radius:20px;letter-spacing:.04em;}
+.header-badge{font-family:var(--sans);font-size:10px;font-weight:700;color:#fff;background:var(--orange);padding:4px 12px;border-radius:20px;letter-spacing:.04em;white-space:nowrap;}
+
+/* Mobile menu toggle button */
+.menu-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;transition:background var(--tr);}
+.menu-toggle:hover{background:var(--olight);}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .2s ease;}
+.menu-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+.menu-toggle.open span:nth-child(2){opacity:0;}
+.menu-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
 
 /* ── LAYOUT ── */
-.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 62px);}
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 58px);}
 
 /* ── SIDEBAR ── */
-aside{width:var(--sidebar);flex-shrink:0;background:#fff;border-right:1px solid var(--border2);padding:22px 18px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;height:100%;}
+aside{width:var(--sidebar);flex-shrink:0;background:#fff;border-right:1px solid var(--border2);padding:20px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:100%;transition:transform .25s ease;}
 .sidebar-label{font-family:var(--sans);font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--text3);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
 .sidebar-label::after{content:'';flex:1;height:1px;background:var(--border);}
-textarea#rawPost{width:100%;height:210px;resize:vertical;background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--body);font-size:12.5px;line-height:1.7;padding:13px;outline:none;transition:border-color var(--tr),box-shadow var(--tr);}
+textarea#rawPost{width:100%;height:180px;resize:vertical;background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--body);font-size:12.5px;line-height:1.7;padding:12px;outline:none;transition:border-color var(--tr),box-shadow var(--tr);}
 textarea#rawPost::placeholder{color:var(--text3);}
 textarea#rawPost:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--olight);background:#fff;}
 .char-count{font-size:10px;color:var(--text3);text-align:right;margin-top:-10px;}
@@ -66,38 +74,121 @@ textarea#rawPost:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--oli
 .btn-extract.loading .spinner{display:block;}
 .btn-extract.loading .btn-icon{display:none;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.tip-box{background:var(--olight);border:1px solid rgba(232,84,26,.18);border-radius:var(--r);padding:12px 14px;}
-.tip-box p{font-size:12px;color:var(--text2);line-height:1.65;}
-.tip-box strong{color:var(--orange);font-weight:600;}
 .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.stat-card{background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);padding:14px 16px;transition:box-shadow var(--tr);}
+.stat-card{background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);padding:12px 14px;transition:box-shadow var(--tr);}
 .stat-card:hover{box-shadow:var(--sh);}
-.stat-card .val{font-family:var(--sans);font-size:30px;font-weight:900;color:var(--orange);line-height:1;}
+.stat-card .val{font-family:var(--sans);font-size:28px;font-weight:900;color:var(--orange);line-height:1;}
 .stat-card .lbl{font-size:10px;color:var(--text3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:249;backdrop-filter:blur(2px);}
+.sidebar-overlay.show{display:block;}
 
 /* ── MAIN ── */
 main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-y:auto;height:100%;}
-.main-toolbar{padding:18px 22px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0;background:var(--bg);}
-.main-toolbar h2{font-family:var(--sans);font-size:17px;font-weight:900;color:var(--dark);flex:1;min-width:120px;letter-spacing:-.01em;}
-.main-toolbar h2 span{color:var(--text3);font-weight:400;font-size:13px;}
-.search-wrap{position:relative;flex:1;max-width:280px;}
-.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;}
-#searchInput{width:100%;background:#fff;border:1.5px solid var(--border2);border-radius:var(--r2);color:var(--text);font-family:var(--body);font-size:13px;padding:9px 12px 9px 33px;outline:none;transition:border-color var(--tr),box-shadow var(--tr);}
+.main-toolbar{padding:16px 18px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;background:var(--bg);}
+.main-toolbar h2{font-family:var(--sans);font-size:16px;font-weight:900;color:var(--dark);flex:1;min-width:100px;letter-spacing:-.01em;}
+.main-toolbar h2 span{color:var(--text3);font-weight:400;font-size:12px;}
+.search-wrap{position:relative;flex:1;max-width:280px;min-width:140px;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;}
+#searchInput{width:100%;background:#fff;border:1.5px solid var(--border2);border-radius:var(--r2);color:var(--text);font-family:var(--body);font-size:13px;padding:8px 12px 8px 32px;outline:none;transition:border-color var(--tr),box-shadow var(--tr);}
 #searchInput::placeholder{color:var(--text3);}
 #searchInput:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--olight);}
 
 /* ── TABLE ── */
-.table-area{flex:1;padding:14px 22px 28px;}
+.table-area{flex:1;padding:12px 18px 24px;}
 .table-card{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh);overflow:hidden;}
+
+/* Desktop table */
+.desktop-table{width:100%;}
 table{width:100%;border-collapse:collapse;}
 thead{background:var(--navy);}
-th{font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;padding:13px 14px;border-bottom:2px solid var(--orange);text-align:left;white-space:nowrap;}
+th{font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;padding:12px 13px;border-bottom:2px solid var(--orange);text-align:left;white-space:nowrap;}
 th:first-child{color:rgba(255,255,255,.9);}
 tbody tr{transition:background var(--tr);border-bottom:1px solid var(--border);cursor:pointer;}
 tbody tr:last-child{border-bottom:none;}
 tbody tr:hover>td{background:#fff5f2;}
-td{padding:14px;color:var(--text2);vertical-align:middle;background:#fff;transition:background var(--tr);font-size:13px;}
+td{padding:13px;color:var(--text2);vertical-align:middle;background:#fff;transition:background var(--tr);font-size:13px;}
 .td-num{font-family:var(--sans);font-size:11px;color:var(--text3);font-weight:700;width:32px;}
+
+/* Mobile job cards */
+.mobile-cards{display:none;flex-direction:column;gap:10px;padding:12px;}
+.job-card{background:#fff;border:1px solid var(--border2);border-radius:var(--r);padding:16px;cursor:pointer;transition:all var(--tr);box-shadow:0 1px 6px rgba(0,0,0,.05);}
+.job-card:hover{box-shadow:var(--sh);border-color:var(--orange);transform:translateY(-1px);}
+.job-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
+.job-card-role{font-family:var(--sans);font-weight:800;font-size:15px;color:var(--dark);line-height:1.3;}
+.job-card-company{font-size:12px;color:var(--text3);font-style:italic;margin-top:2px;}
+.job-card-actions{display:flex;gap:6px;flex-shrink:0;}
+.job-card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;}
+.job-card-loc{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);}
+.job-card-loc .loc-dot{width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.job-card-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-top:10px;border-top:1px solid var(--border);}
+.job-card-date{font-size:11px;color:var(--text3);}
+.job-card-contact a,.job-card-contact .btn-apply{font-size:11px;}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+
+/* Tablet — 768px to 1024px */
+@media(max-width:1024px){
+  :root{--sidebar:280px;}
+  .main-toolbar{padding:14px 14px 0;}
+  .table-area{padding:10px 14px 20px;}
+  td,th{padding:11px 10px;}
+}
+
+/* Mobile — under 768px */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto;}
+  .layout{flex-direction:column;height:auto;overflow:visible;}
+
+  /* Header mobile */
+  header{padding:0 16px;height:54px;}
+  .logo-text{font-size:16px;}
+  .header-badge{font-size:9px;padding:3px 10px;}
+  .menu-toggle{display:flex;}
+
+  /* Sidebar becomes slide-in drawer on mobile */
+  aside{
+    position:fixed;
+    left:0;top:54px;
+    width:85vw;max-width:320px;
+    height:calc(100vh - 54px);
+    z-index:250;
+    transform:translateX(-100%);
+    box-shadow:4px 0 24px rgba(0,0,0,.15);
+    overflow-y:auto;
+  }
+  aside.open{transform:translateX(0);}
+
+  /* Main takes full width */
+  main{width:100%;height:auto;overflow:visible;min-height:calc(100vh - 54px);}
+
+  /* Hide desktop table, show mobile cards */
+  .desktop-table{display:none;}
+  .mobile-cards{display:flex;}
+  .table-area{padding:10px 12px 20px;}
+
+  /* Toolbar */
+  .main-toolbar{padding:14px 12px 0;}
+  .main-toolbar h2{font-size:15px;}
+  .search-wrap{max-width:100%;min-width:0;flex:1;}
+
+  /* Modal full screen on mobile */
+  .modal-backdrop{padding:0;align-items:flex-end;}
+  .modal{max-width:100%;max-height:92vh;border-radius:16px 16px 0 0;}
+  .modal-role{font-size:18px;}
+  .modal-tabs .tab-btn{font-size:10px;padding:11px 6px;}
+}
+
+/* Small mobile — under 480px */
+@media(max-width:480px){
+  header{padding:0 12px;}
+  .logo-text{font-size:15px;}
+  .header-badge{display:none;}
+  .main-toolbar h2{font-size:14px;}
+  .job-card{padding:14px;}
+  .job-card-role{font-size:14px;}
+}
 .role-cell{display:flex;flex-direction:column;gap:3px;}
 .role-name{font-family:var(--sans);font-weight:700;color:var(--dark);font-size:14px;}
 .company-name{font-size:11.5px;color:var(--text3);font-style:italic;}
@@ -255,6 +346,9 @@ td{padding:14px;color:var(--text2);vertical-align:middle;background:#fff;transit
 <body>
 
 <header>
+  <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="logo">
     <div class="logo-icon">💼</div>
     <span class="logo-text">Job<span>Tracker</span></span>
@@ -262,6 +356,8 @@ td{padding:14px;color:var(--text2);vertical-align:middle;background:#fff;transit
   <div class="spacer"></div>
   <div class="header-badge">✦ LLM-Powered</div>
 </header>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <div class="layout">
   <aside>
@@ -436,6 +532,15 @@ function sourceBadgeSm(src){
 
 function getStatus(id){return localStorage.getItem('job_status_'+id)||'saved';}
 function setStatus(id,s){localStorage.setItem('job_status_'+id,s);}
+
+function toggleSidebar(){
+  const aside=document.querySelector('aside');
+  const overlay=document.getElementById('sidebarOverlay');
+  const toggle=document.getElementById('menuToggle');
+  aside.classList.toggle('open');
+  overlay.classList.toggle('show');
+  toggle.classList.toggle('open');
+}
 
 window.addEventListener('DOMContentLoaded',()=>{
   loadJobs();
@@ -628,13 +733,13 @@ function renderTable(jobs){
   const w=document.getElementById('tableWrapper');
   document.getElementById('jobCountLabel').textContent=jobs.length?'('+jobs.length+')':'';
   if(!jobs.length){
-    w.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>No jobs saved yet</p><small>Paste a LinkedIn job post on the left to get started</small></div>';
+    w.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>No jobs saved yet</p><small>Tap the menu ☰ to add a job post</small></div>';
     return;
   }
-  let rows='';
+  let rows='',cards='';
   jobs.forEach((j,i)=>{
     let contact='<span class="null-val">—</span>';
-    if(j.apply_link)contact='<a class="btn-apply" href="'+esc(j.apply_link)+'" target="_blank" rel="noopener">🔗 Apply Now</a>';
+    if(j.apply_link)contact='<a class="btn-apply" href="'+esc(j.apply_link)+'" target="_blank" rel="noopener">🔗 Apply</a>';
     else if(j.contact_email){
       const emails=j.contact_email.split(/[,;]/).map(e=>e.trim()).filter(Boolean);
       contact='<div class="email-cell">'+emails.map(e=>'<span class="email-text">'+esc(e)+'</span>').join('<br>')+
@@ -644,22 +749,19 @@ function renderTable(jobs){
     const exp=extractExperience(j.job_description||j.raw_post||'');
     const st=getStatus(j.id);
     const src=localStorage.getItem('job_source_'+j.id);
-
-    // Role cell — name + company + salary + source underneath
     const roleCell='<div class="role-cell">'+
       '<span class="role-name">'+(j.job_role?esc(j.job_role):'<span class="null-val">Unknown</span>')+'</span>'+
       (j.company_name?'<span class="company-name">'+esc(j.company_name)+'</span>':'')+
       '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;">'+
         (j.salary?'<span class="salary-badge">💰 '+esc(j.salary)+'</span>':'')+
         (src?sourceBadgeSm(src):'')+
-      '</div>'+
-    '</div>';
-
-    // Exp & Status column — ONLY exp level + status
+      '</div></div>';
     let badges='';
     if(exp)badges+='<span class="exp-badge '+exp.cls+'">'+exp.label+'</span>';
     badges+='<span class="status-badge '+st+'" id="status-badge-'+j.id+'">'+stLabel(st)+'</span>';
     const date=j.date_added?formatDate(j.date_added):'—';
+
+    // Desktop table row
     rows+=
       '<tr onclick="openModal('+j.id+')">'+
         '<td class="td-num">'+(i+1)+'</td>'+
@@ -671,12 +773,39 @@ function renderTable(jobs){
         '<td onclick="event.stopPropagation()"><div class="actions-cell">'+
           '<button class="btn-details" onclick="openModal('+j.id+')">▼ Details</button>'+
           '<button class="btn-del" onclick="deleteJob('+j.id+')">🗑</button>'+
-        '</div></td>'+
-      '</tr>';
+        '</div></td></tr>';
+
+    // Mobile card
+    cards+=
+      '<div class="job-card" onclick="openModal('+j.id+')">'+
+        '<div class="job-card-top">'+
+          '<div style="flex:1;min-width:0;">'+
+            '<div class="job-card-role">'+(j.job_role?esc(j.job_role):'Unknown Role')+'</div>'+
+            (j.company_name?'<div class="job-card-company">'+esc(j.company_name)+'</div>':'')+
+          '</div>'+
+          '<div class="job-card-actions">'+
+            '<button class="btn-details" onclick="event.stopPropagation();openModal('+j.id+')">Details</button>'+
+            '<button class="btn-del" onclick="event.stopPropagation();deleteJob('+j.id+')">🗑</button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="job-card-meta">'+
+          (j.job_location?'<div class="job-card-loc"><div class="loc-dot"></div>'+esc(j.job_location)+'</div>':'')+
+          (j.salary?'<span class="salary-badge">💰 '+esc(j.salary)+'</span>':'')+
+          (exp?'<span class="exp-badge '+exp.cls+'">'+exp.label+'</span>':'')+
+          (src?sourceBadgeSm(src):'')+
+          '<span class="status-badge '+st+'" id="status-badge-mob-'+j.id+'">'+stLabel(st)+'</span>'+
+        '</div>'+
+        '<div class="job-card-footer">'+
+          '<span class="job-card-date">📅 '+date+'</span>'+
+          '<div onclick="event.stopPropagation()">'+contact+'</div>'+
+        '</div>'+
+      '</div>';
   });
-  w.innerHTML='<div class="table-card"><table>'+
-    '<thead><tr><th>#</th><th>Job Role</th><th>Location</th><th>Contact / Apply</th><th>Exp &amp; Status</th><th>Date Added</th><th>Actions</th></tr></thead>'+
-    '<tbody>'+rows+'</tbody></table></div>';
+  w.innerHTML=
+    '<div class="table-card desktop-table"><table>'+
+      '<thead><tr><th>#</th><th>Job Role</th><th>Location</th><th>Contact / Apply</th><th>Exp &amp; Status</th><th>Date Added</th><th>Actions</th></tr></thead>'+
+      '<tbody>'+rows+'</tbody></table></div>'+
+    '<div class="mobile-cards">'+cards+'</div>';
 }
 
 function updateStats(jobs){
